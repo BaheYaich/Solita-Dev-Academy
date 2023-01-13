@@ -22,15 +22,23 @@ export default class JourneysDAO {
         let query
         if (filters) {
             if ("departureDate" in filters) {
-                query = {"departureDate": { $eq: filters ["departureDate"]}}
+                const dateRange1 = new Date(filters ["departureDate"])
+                const dateRange2 = new Date(filters ["departureDate"])
+                query = {"Departure": { $gt: new Date(dateRange1.setDate(dateRange1.getDate() - 1)), $lt: new Date(dateRange2.setDate(dateRange2.getDate() + 1)) }}
             } else if ("returnDate" in filters) {
-                query = {"returnDate": { $eq: filters ["returnDate"]}}
+                query = {"Return": { $eq: filters ["returnDate"]}}
             } else if ("departureStationId" in filters) {
-                query = {"departureStationId": { $eq: filters ["departureStationId"]}}
+                query = {"Departure station id": { $eq: filters ["departureStationId"]}}
             } else if ("returnStationId" in filters) {
-                query = {"returnStationId": { $eq: filters ["returnStationId"]}}
+                query = {"Return station id": { $eq: filters ["returnStationId"]}}
             } else if ("duration" in filters) {
-                query = {"duration": { $eq: filters ["duration"]}}
+                query = {"Duration (s)": { $eq: filters ["duration"]}}
+            } else if ("departureStationName" in filters) {
+                query = {"Departure station name": { $eq: filters ["departureStationName"]}}
+            } else if ("returnStationName" in filters) {
+                query = {"Return station name": { $eq: filters ["returnStationName"]}}
+            } else if ("coveredDistance" in filters) {
+                query = {"Covered distance (m)": { $eq: filters ["coveredDistance"]}}
             }
         }
 
